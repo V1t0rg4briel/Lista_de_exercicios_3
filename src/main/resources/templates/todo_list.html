@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <h1>Todo List</h1>
+
+        <div class="cadastrar">
+            <form th:action="@{/add}" method="post">
+                <div class="mb-3">
+                    <label for="tarefa" class="form-label">Tarefa:</label>
+                    <input required type="text" class="form-control" id="tarefa" name="tarefa" placeholder="....">
+                </div>
+
+                <div class="mb-3">
+                    <label for="dataLimite" class="form-label">Data limite:</label>
+                    <input type="date" class="form-control" id="dataLimite" name="dataLimite"
+                        placeholder="name@example.com">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Novo</button>
+            </form>
+
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID: </th>
+                    <th scope="col">Tarefa: </th>
+                    <th scope="col">Estado: </th>
+                    <th scope="col">Data: </th>
+                    <th scope="col">Opções: </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="tarefa : ${todoList}">
+                    <td th:text="${#strings.abbreviate(tarefa.id, 10)}">???</td>
+                    <td th:text="${tarefa.tarefa}">???</td>
+                    <td th:text="${tarefa.estado.descricao}">???</td>
+                    <td th:text="${#temporals.format(tarefa.dataLimite, 'dd/MM/yyyy')}">???</td>
+                    <td>
+                        <a th:href="@{/aterar-estado/{id} (id = ${tarefa.id}) }"><i class="bi bi-arrow-left-right"></i></a>
+                        <a th:href="@{/remover/{id} (id = ${tarefa.id}) }"><i class="bi bi-trash3-fill"></i></a> 
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
